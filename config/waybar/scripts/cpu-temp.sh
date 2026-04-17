@@ -130,7 +130,7 @@ else
 fi
 
 # Build the text with Pango markup for independent coloring
-text="<span color='${color_cpu}'>CPU: ${cpu_usage}%</span> <span color='${color_sep}'>|</span> <span color='${temp_color}'>${temp_display}</span>"
+text="<span color='${color_cpu}'>CPU: ${cpu_usage}%</span> <span color='${color_sep}'>/</span> <span color='${temp_color}'>&lt;${temp_display}&gt;</span>"
 
 # Build tooltip
 tooltip="CPU Usage: ${cpu_usage}%\nTemperature: ${temp_display}"
