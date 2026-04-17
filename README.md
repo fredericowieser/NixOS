@@ -24,6 +24,8 @@ bash <(curl -s https://raw.githubusercontent.com/fredericowieser/NixOS/main/inst
 - Network connectivity
 - User with sudo access
 
+> **Note:** The installer will prompt you to set a password for your user account. If you skip this step, remember to run `sudo passwd <username>` before rebooting.
+
 ## Features
 
 - **Tokyo Night** color scheme across all applications

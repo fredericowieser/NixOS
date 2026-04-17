@@ -265,6 +265,21 @@ install_ytx() {
     fi
 }
 
+# Set user password
+set_user_password() {
+    echo ""
+    warn "Your user account needs a password to log in."
+    read -p "Set password for '$USERNAME' now? [Y/n]: " SET_PASS
+    SET_PASS=${SET_PASS:-Y}
+
+    if [[ "$SET_PASS" =~ ^[Yy]$ ]]; then
+        sudo passwd "$USERNAME"
+        success "Password set for $USERNAME"
+    else
+        warn "Remember to set a password before rebooting: sudo passwd $USERNAME"
+    fi
+}
+
 # Print final message
 print_success() {
     echo ""
@@ -278,7 +293,7 @@ print_success() {
     echo ""
     echo "Next steps:"
     echo "  1. Reboot your system to start Hyprland"
-    echo "  2. Log in via SDDM"
+    echo "  2. Log in via SDDM with your username and password"
     echo ""
     echo "Keybindings (Super = Windows key):"
     echo "  Super+Space    App launcher"
@@ -304,6 +319,7 @@ main() {
     install_dotfiles
     make_scripts_executable
     rebuild_nixos
+    set_user_password
     install_ytx
     print_success
 }
