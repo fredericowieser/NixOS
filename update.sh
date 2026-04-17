@@ -94,6 +94,11 @@ chmod +x "$CONFIG_DIR/waybar/scripts/"*.sh 2>/dev/null || true
 chmod +x "$CONFIG_DIR/hypr/scripts/"*.sh 2>/dev/null || true
 print_success "Scripts are executable"
 
+# Step 3.5: Clear waybar caches for fresh output
+print_status "Clearing waybar caches..."
+rm -f /tmp/waybar-weather-cache 2>/dev/null || true
+print_success "Caches cleared"
+
 # Step 4: Ask about NixOS config update
 echo ""
 read -p "$(echo -e "${YELLOW}Update /etc/nixos/configuration.nix? [y/N]:${NC} ")" update_nixos
