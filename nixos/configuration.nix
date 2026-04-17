@@ -65,6 +65,7 @@
 
   # Support removable drives
   services.udisks2.enable = true;
+  services.gvfs.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
