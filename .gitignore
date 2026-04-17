@@ -1,0 +1,22 @@
+# Claude Code
+.claude.json
+.claude/
+
+# System files
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+
+# Secrets (just in case)
+*.env
+.env.*
+secrets/
+credentials/

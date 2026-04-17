@@ -1,0 +1,298 @@
+/* Tokyo Night Waybar Theme */
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+    font-size: 13px;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+}
+
+window#waybar {
+    background-color: #1a1b26;
+    color: #c0caf5;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/* Workspaces */
+#workspaces {
+    background-color: transparent;
+    margin: 0 4px;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    margin: 4px 2px;
+    color: #565f89;
+    background-color: transparent;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+#workspaces button:hover {
+    background-color: rgba(122, 162, 247, 0.2);
+    color: #7aa2f7;
+}
+
+#workspaces button.active {
+    color: #7aa2f7;
+    background-color: rgba(122, 162, 247, 0.15);
+    border-bottom: 2px solid #7aa2f7;
+}
+
+#workspaces button.urgent {
+    color: #f7768e;
+    background-color: rgba(247, 118, 142, 0.2);
+}
+
+/* Clock */
+#clock {
+    color: #c0caf5;
+    font-weight: bold;
+    padding: 0 12px;
+}
+
+/* Separator */
+#custom-separator {
+    color: #565f89;
+    padding: 0 4px;
+}
+
+/* Common module styling */
+#cpu,
+#memory,
+#disk,
+#custom-temp,
+#pulseaudio,
+#battery,
+#tray,
+#custom-notifications,
+#custom-caffeine,
+#custom-power {
+    padding: 0 8px;
+    margin: 4px 2px;
+    color: #c0caf5;
+    background-color: transparent;
+    border-radius: 4px;
+}
+
+/* CPU */
+#cpu {
+    color: #7aa2f7;
+}
+
+#cpu.warning {
+    color: #e0af68;
+}
+
+#cpu.critical {
+    color: #f7768e;
+}
+
+/* Temperature */
+#custom-temp {
+    color: #bb9af7;
+}
+
+#custom-temp.warning {
+    color: #e0af68;
+}
+
+#custom-temp.critical {
+    color: #f7768e;
+    animation: blink 1s linear infinite;
+}
+
+/* Memory */
+#memory {
+    color: #7dcfff;
+}
+
+#memory.warning {
+    color: #e0af68;
+}
+
+#memory.critical {
+    color: #f7768e;
+}
+
+/* Disk */
+#disk {
+    color: #9ece6a;
+}
+
+/* Network Status */
+#custom-network {
+    padding: 0 8px;
+    margin: 4px 2px;
+    border-radius: 4px;
+}
+
+#custom-network.connected {
+    color: #9ece6a;
+}
+
+#custom-network.no-internet {
+    color: #e0af68;
+}
+
+#custom-network.disconnected {
+    color: #f7768e;
+}
+
+/* Pulseaudio */
+#pulseaudio {
+    color: #7dcfff;
+}
+
+#pulseaudio.muted {
+    color: #565f89;
+}
+
+/* Notifications */
+#custom-notifications {
+    color: #9ece6a;
+}
+
+#custom-notifications.dnd {
+    color: #565f89;
+}
+
+/* Caffeine */
+#custom-caffeine {
+    color: #565f89;
+}
+
+#custom-caffeine.active {
+    color: #e0af68;
+}
+
+/* Power button */
+#custom-power {
+    color: #f7768e;
+    padding: 0 10px;
+    margin-right: 4px;
+}
+
+#custom-power:hover {
+    background-color: rgba(247, 118, 142, 0.2);
+}
+
+/* Battery */
+#battery {
+    color: #9ece6a;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: #9ece6a;
+}
+
+#battery.warning:not(.charging) {
+    color: #e0af68;
+}
+
+#battery.critical:not(.charging) {
+    color: #f7768e;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+    to {
+        color: #c0caf5;
+    }
+}
+
+/* Tray */
+#tray {
+    margin-right: 4px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    color: #f7768e;
+}
+
+/* Tooltip */
+tooltip {
+    background-color: #1a1b26;
+    border: 1px solid #7aa2f7;
+    border-radius: 4px;
+}
+
+tooltip label {
+    color: #c0caf5;
+    padding: 4px;
+}
+
+/* Hover effects for interactive modules */
+#cpu:hover,
+#memory:hover,
+#disk:hover,
+#custom-temp:hover,
+#pulseaudio:hover,
+#network:hover,
+#custom-notifications:hover,
+#custom-caffeine:hover,
+#custom-weather:hover,
+#custom-pomodoro:hover {
+    background-color: rgba(122, 162, 247, 0.1);
+}
+
+/* Weather Module */
+#custom-weather {
+    padding: 0 8px;
+    margin: 4px 2px;
+    color: #c0caf5;
+    border-radius: 4px;
+}
+
+#custom-weather.sunny {
+    color: #e0af68;
+}
+
+#custom-weather.cloudy {
+    color: #c0caf5;
+}
+
+#custom-weather.rain {
+    color: #7dcfff;
+}
+
+#custom-weather.hot {
+    color: #f7768e;
+}
+
+#custom-weather.cold {
+    color: #7dcfff;
+}
+
+/* Pomodoro Timer */
+#custom-pomodoro {
+    padding: 0 8px;
+    margin: 4px 2px;
+    border-radius: 4px;
+}
+
+#custom-pomodoro.idle {
+    color: #565f89;
+}
+
+#custom-pomodoro.work {
+    color: #f7768e;
+}
+
+#custom-pomodoro.break {
+    color: #9ece6a;
+}
+
+#custom-pomodoro.paused {
+    color: #565f89;
+}

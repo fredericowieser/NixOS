@@ -1,0 +1,185 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 32,
+    "spacing": 4,
+
+    "modules-left": [
+        "custom/power",
+        "clock",
+        "hyprland/workspaces",
+        "custom/weather"
+    ],
+    "modules-center": [],
+    "modules-right": [
+        "custom/pomodoro",
+        "custom/separator",
+        "cpu",
+        "custom/temp",
+        "memory",
+        "disk",
+        "custom/separator",
+        "pulseaudio",
+        "custom/notifications",
+        "custom/caffeine",
+        "custom/separator",
+        "custom/network",
+        "battery",
+        "tray"
+    ],
+
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "1": "1 : 󰆍",
+            "2": "2 : 󰖟",
+            "3": "3 : 󰍡",
+            "4": "4 : 󰂺",
+            "5": "5 : 󰎆",
+            "6": "6 : 󰅩",
+            "7": "7 : 󰐕",
+            "8": "8 : 󰐕"
+        },
+        "persistent-workspaces": {
+            "*": 8
+        },
+        "on-click": "activate",
+        "sort-by-number": true
+    },
+
+    "clock": {
+        "format": "{:%H:%M %d/%m/%y}",
+        "format-alt": "{:%A, %B %d, %Y}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "year",
+            "mode-mon-col": 3,
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#c0caf5'><b>{}</b></span>",
+                "days": "<span color='#565f89'>{}</span>",
+                "weeks": "<span color='#7aa2f7'>W{}</span>",
+                "weekdays": "<span color='#bb9af7'>{}</span>",
+                "today": "<span color='#f7768e'><b><u>{}</u></b></span>"
+            }
+        }
+    },
+
+    "cpu": {
+        "format": "CPU: {usage}%",
+        "tooltip-format": "CPU Usage: {usage}%\nLoad: {load}",
+        "interval": 2,
+        "on-click": "kitty -e htop"
+    },
+
+    "custom/temp": {
+        "exec": "~/.config/waybar/scripts/temp.sh",
+        "return-type": "json",
+        "interval": 5,
+        "tooltip": true
+    },
+
+    "memory": {
+        "format": "RAM: {percentage}%",
+        "tooltip-format": "RAM: {used:0.1f}GB / {total:0.1f}GB ({percentage}%)\nSwap: {swapUsed:0.1f}GB / {swapTotal:0.1f}GB",
+        "interval": 5,
+        "on-click": "kitty -e htop"
+    },
+
+    "disk": {
+        "format": "SSD: {percentage_used}%",
+        "tooltip-format": "Disk: {used} / {total} ({percentage_used}%)\nPath: {path}",
+        "path": "/",
+        "interval": 30
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-muted": "󰝟",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󰋎",
+            "headset": "󰋎",
+            "phone": "󰏲",
+            "portable": "󰏲",
+            "car": "󰄋",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "on-click": "pavucontrol",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "tooltip-format": "{desc}\nVolume: {volume}%"
+    },
+
+    "custom/notifications": {
+        "exec": "~/.config/waybar/scripts/notifications.sh",
+        "return-type": "json",
+        "interval": 2,
+        "on-click": "~/.config/waybar/scripts/notifications.sh toggle && pkill -RTMIN+8 waybar",
+        "signal": 8,
+        "tooltip": true
+    },
+
+    "custom/caffeine": {
+        "exec": "~/.config/waybar/scripts/caffeine.sh",
+        "return-type": "json",
+        "interval": 2,
+        "on-click": "~/.config/waybar/scripts/caffeine.sh toggle && pkill -RTMIN+9 waybar",
+        "signal": 9,
+        "tooltip": true
+    },
+
+    "custom/power": {
+        "format": "󰐥",
+        "tooltip-format": "Power Menu",
+        "on-click": "~/.config/waybar/scripts/power-menu.sh"
+    },
+
+    "custom/separator": {
+        "format": "|",
+        "interval": "once",
+        "tooltip": false
+    },
+
+    "custom/network": {
+        "exec": "~/.config/waybar/scripts/network-status.sh",
+        "return-type": "json",
+        "interval": 10,
+        "tooltip": true,
+        "on-click": "nm-connection-editor"
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰚥 {capacity}%",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "tooltip-format": "{timeTo}"
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+
+    "custom/weather": {
+        "exec": "~/.config/waybar/scripts/weather.sh",
+        "return-type": "json",
+        "interval": 900,
+        "tooltip": true
+    },
+
+    "custom/pomodoro": {
+        "exec": "~/.config/waybar/scripts/pomodoro.sh",
+        "return-type": "json",
+        "interval": 1,
+        "on-click": "~/.config/waybar/scripts/pomodoro.sh toggle",
+        "on-click-right": "~/.config/waybar/scripts/pomodoro.sh reset",
+        "tooltip": true
+    }
+}
