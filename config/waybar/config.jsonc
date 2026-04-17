@@ -12,8 +12,6 @@
     ],
     "modules-center": [],
     "modules-right": [
-        "custom/pomodoro",
-        "custom/separator",
         "cpu",
         "custom/temp",
         "memory",
@@ -166,12 +164,4 @@
         "tooltip": true
     },
 
-    "custom/pomodoro": {
-        "exec": "~/.config/waybar/scripts/pomodoro.sh",
-        "return-type": "json",
-        "interval": 1,
-        "on-click": "~/.config/waybar/scripts/pomodoro.sh toggle",
-        "on-click-right": "~/.config/waybar/scripts/pomodoro.sh reset",
-        "tooltip": true
-    }
 }
