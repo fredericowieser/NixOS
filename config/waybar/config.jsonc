@@ -12,8 +12,7 @@
     ],
     "modules-center": [],
     "modules-right": [
-        "cpu",
-        "custom/temp",
+        "custom/cpu-temp",
         "memory",
         "custom/separator",
         "pulseaudio",
@@ -63,18 +62,12 @@
         }
     },
 
-    "cpu": {
-        "format": "CPU: {usage}%",
-        "tooltip-format": "CPU Usage: {usage}%\nLoad: {load}",
-        "interval": 2,
-        "on-click": "kitty -e htop"
-    },
-
-    "custom/temp": {
-        "exec": "~/.config/waybar/scripts/temp.sh",
+    "custom/cpu-temp": {
+        "exec": "~/.config/waybar/scripts/cpu-temp.sh",
         "return-type": "json",
-        "interval": 5,
-        "tooltip": true
+        "interval": 2,
+        "tooltip": true,
+        "on-click": "kitty -e htop"
     },
 
     "memory": {

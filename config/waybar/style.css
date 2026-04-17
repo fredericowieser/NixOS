@@ -66,6 +66,7 @@ window#waybar.hidden {
 #memory,
 #disk,
 #custom-temp,
+#custom-cpu-temp,
 #pulseaudio,
 #battery,
 #tray,
@@ -104,6 +105,15 @@ window#waybar.hidden {
 #custom-temp.critical {
     color: #f7768e;
     animation: blink 1s linear infinite;
+}
+
+/* Combined CPU + Temperature */
+#custom-cpu-temp.warning {
+    background-color: rgba(224, 175, 104, 0.1);
+}
+
+#custom-cpu-temp.critical {
+    background-color: rgba(247, 118, 142, 0.1);
 }
 
 /* Memory */
@@ -237,6 +247,7 @@ tooltip label {
 #memory:hover,
 #disk:hover,
 #custom-temp:hover,
+#custom-cpu-temp:hover,
 #pulseaudio:hover,
 #network:hover,
 #custom-notifications:hover,
