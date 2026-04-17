@@ -13,6 +13,7 @@
     "modules-center": [],
     "modules-right": [
         "custom/cpu-temp",
+        "custom/separator",
         "memory",
         "custom/separator",
         "pulseaudio",
