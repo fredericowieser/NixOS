@@ -19,8 +19,34 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Repository URL
+REPO_URL="https://github.com/fredericowieser/NixOS.git"
+REPO_DIR="$HOME/NixOS"
+
 # Get the directory where this script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)"
+
+# Check if we're running from a proper clone or via curl pipe
+ensure_repo_cloned() {
+    # If SCRIPT_DIR is empty, /dev, or doesn't contain our files, we need to clone
+    if [[ -z "$SCRIPT_DIR" ]] || [[ "$SCRIPT_DIR" == "/dev"* ]] || [[ ! -f "$SCRIPT_DIR/nixos/configuration.nix" ]]; then
+        echo -e "${BLUE}[INFO]${NC} Cloning repository to $REPO_DIR..."
+
+        if [[ -d "$REPO_DIR" ]]; then
+            echo -e "${YELLOW}[WARN]${NC} $REPO_DIR already exists. Updating..."
+            cd "$REPO_DIR" && git pull
+        else
+            git clone "$REPO_URL" "$REPO_DIR"
+        fi
+
+        # Re-execute from the cloned repo
+        echo -e "${BLUE}[INFO]${NC} Running installer from cloned repository..."
+        exec "$REPO_DIR/install.sh" "$@"
+    fi
+}
+
+# Run the repo check early
+ensure_repo_cloned "$@"
 
 print_banner() {
     echo -e "${BLUE}"
