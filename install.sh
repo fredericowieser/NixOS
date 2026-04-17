@@ -30,6 +30,29 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)"
 ensure_repo_cloned() {
     # If SCRIPT_DIR is empty, /dev, or doesn't contain our files, we need to clone
     if [[ -z "$SCRIPT_DIR" ]] || [[ "$SCRIPT_DIR" == "/dev"* ]] || [[ ! -f "$SCRIPT_DIR/nixos/configuration.nix" ]]; then
+
+        # Ensure git is available (fresh NixOS minimal installs don't have git)
+        if ! command -v git &>/dev/null; then
+            echo -e "${BLUE}[INFO]${NC} Git not found. Installing git temporarily..."
+            nix-shell -p git --run "$(cat <<'INNERSCRIPT'
+                set -e
+                REPO_URL="https://github.com/fredericowieser/NixOS.git"
+                REPO_DIR="$HOME/NixOS"
+
+                echo -e "\033[0;34m[INFO]\033[0m Cloning repository to $REPO_DIR..."
+                if [[ -d "$REPO_DIR" ]]; then
+                    echo -e "\033[1;33m[WARN]\033[0m $REPO_DIR already exists. Updating..."
+                    cd "$REPO_DIR" && git pull
+                else
+                    git clone "$REPO_URL" "$REPO_DIR"
+                fi
+INNERSCRIPT
+            )"
+            # Re-execute from the cloned repo
+            echo -e "${BLUE}[INFO]${NC} Running installer from cloned repository..."
+            exec "$REPO_DIR/install.sh" "$@"
+        fi
+
         echo -e "${BLUE}[INFO]${NC} Cloning repository to $REPO_DIR..."
 
         if [[ -d "$REPO_DIR" ]]; then
