@@ -88,6 +88,13 @@ if [[ -d "$REPO_DIR/config/gtk-3.0" ]]; then
     print_success "Updated GTK config"
 fi
 
+# Swaync
+if [[ -d "$REPO_DIR/config/swaync" ]]; then
+    mkdir -p "$CONFIG_DIR/swaync"
+    cp -r "$REPO_DIR/config/swaync/"* "$CONFIG_DIR/swaync/"
+    print_success "Updated Swaync config"
+fi
+
 # Step 3: Make scripts executable
 print_status "Making scripts executable..."
 chmod +x "$CONFIG_DIR/waybar/scripts/"*.sh 2>/dev/null || true

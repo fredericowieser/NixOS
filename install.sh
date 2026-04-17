@@ -153,7 +153,7 @@ backup_configs() {
     BACKUP_DIR="$HOME/.config-backup-$(date +%Y%m%d-%H%M%S)"
     local backed_up=false
 
-    for dir in hypr waybar nvim kitty wofi gtk-3.0; do
+    for dir in hypr waybar nvim kitty wofi gtk-3.0 swaync; do
         if [[ -d "$HOME/.config/$dir" ]]; then
             if [[ "$backed_up" == false ]]; then
                 info "Backing up existing configs to $BACKUP_DIR"
@@ -192,7 +192,7 @@ install_dotfiles() {
     info "Installing dotfiles to ~/.config/..."
 
     # Create config directories
-    mkdir -p ~/.config/{hypr/scripts,waybar/scripts,nvim,kitty,wofi,gtk-3.0}
+    mkdir -p ~/.config/{hypr/scripts,waybar/scripts,nvim,kitty,wofi,gtk-3.0,swaync}
 
     # Copy Hyprland configs
     cp "$SCRIPT_DIR/config/hypr/hyprland.conf" ~/.config/hypr/
@@ -226,6 +226,10 @@ install_dotfiles() {
     # Copy GTK settings
     cp "$SCRIPT_DIR/config/gtk-3.0/settings.ini" ~/.config/gtk-3.0/
     success "GTK settings installed"
+
+    # Copy swaync configs
+    cp "$SCRIPT_DIR/config/swaync/"* ~/.config/swaync/
+    success "Swaync configuration installed"
 }
 
 # Make scripts executable

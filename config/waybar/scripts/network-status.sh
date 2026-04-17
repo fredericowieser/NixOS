@@ -4,41 +4,43 @@
 # Amber: connected but no internet
 # Red: disconnected
 
-# Check connection type
-ethernet=$(ip link show 2>/dev/null | grep -E "^[0-9]+: (eth|enp)" | grep "state UP" | head -1)
-wifi=$(iwgetid -r 2>/dev/null)
+# Use nmcli to get connection info (more reliable than iwgetid)
+connection_info=$(nmcli -t -f TYPE,NAME,DEVICE connection show --active 2>/dev/null | head -1)
 
-# Determine connection type and interface
-if [[ -n "$ethernet" ]]; then
-    conn_type="ethernet"
-    icon_connected="󰈀"
-    interface=$(echo "$ethernet" | cut -d: -f2 | tr -d ' ')
-elif [[ -n "$wifi" ]]; then
-    conn_type="wifi"
-    icon_connected="󰤨"
-else
-    # No connection
+if [[ -z "$connection_info" ]]; then
+    # No active connection
     echo '{"text": "󰤭", "tooltip": "No network connection", "class": "disconnected"}'
     exit 0
 fi
 
+# Parse connection type and name
+conn_type=$(echo "$connection_info" | cut -d: -f1)
+conn_name=$(echo "$connection_info" | cut -d: -f2)
+
+# Determine icon based on connection type
+case "$conn_type" in
+    *wireless*|*wifi*|802-11-wireless)
+        icon_connected="󰤨"
+        conn_display="WiFi: $conn_name"
+        icon_no_internet="󰤫"
+        ;;
+    *ethernet*|802-3-ethernet)
+        icon_connected="󰈀"
+        conn_display="Ethernet: $conn_name"
+        icon_no_internet="󰈂"
+        ;;
+    *)
+        icon_connected="󰛳"
+        conn_display="Connected: $conn_name"
+        icon_no_internet="󰲛"
+        ;;
+esac
+
 # Check for internet connectivity
 if ping -c 1 -W 2 1.1.1.1 &>/dev/null || ping -c 1 -W 2 8.8.8.8 &>/dev/null; then
     # Connected with internet
-    if [[ "$conn_type" == "wifi" ]]; then
-        tooltip="WiFi: $wifi (Online)"
-    else
-        tooltip="Ethernet: $interface (Online)"
-    fi
-    echo "{\"text\": \"$icon_connected\", \"tooltip\": \"$tooltip\", \"class\": \"connected\"}"
+    echo "{\"text\": \"$icon_connected\", \"tooltip\": \"$conn_display (Online)\", \"class\": \"connected\"}"
 else
     # Connected but no internet
-    if [[ "$conn_type" == "wifi" ]]; then
-        tooltip="WiFi: $wifi (No Internet)"
-        icon="󰤫"
-    else
-        tooltip="Ethernet: $interface (No Internet)"
-        icon="󰈂"
-    fi
-    echo "{\"text\": \"$icon\", \"tooltip\": \"$tooltip\", \"class\": \"no-internet\"}"
+    echo "{\"text\": \"$icon_no_internet\", \"tooltip\": \"$conn_display (No Internet)\", \"class\": \"no-internet\"}"
 fi

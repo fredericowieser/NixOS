@@ -28,6 +28,7 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
+    theme = "where_is_my_sddm_theme";
   };
 
   xdg.portal = {
@@ -52,6 +53,7 @@
 
   # Sound
   security.rtkit.enable = true;
+  security.polkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -74,7 +76,7 @@
   users.users.USERNAME = {
     isNormalUser = true;
     description = "Primary User";
-    extraGroups = [ "wheel" "networkmanager" "audio" "video" ]; # Enable 'sudo' for the user.
+    extraGroups = [ "wheel" "networkmanager" "audio" "video" "disk" "plugdev" ]; # Enable 'sudo' for the user.
     packages = with pkgs; [
       tree
     ];
@@ -112,6 +114,7 @@
     udiskie
     xfce.thunar
     xfce.thunar-volman
+    xfce.tumbler
 
     htop
     neofetch
@@ -171,6 +174,20 @@
 
     # Cursor theme
     adwaita-icon-theme
+
+    # SDDM theme with blur
+    (pkgs.where-is-my-sddm-theme.override {
+      themeConfig.General = {
+        background = "~/.config/hypr/wallpaper-black.png";
+        backgroundMode = "fill";
+        blurRadius = 50;
+        fontFamily = "JetBrainsMono Nerd Font";
+        fontColor = "#c0caf5";
+        inputColor = "#1a1b26";
+        inputRadius = 8;
+        sessionColor = "#7aa2f7";
+      };
+    })
   ];
 
   # Fonts

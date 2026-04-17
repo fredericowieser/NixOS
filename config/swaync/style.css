@@ -1,0 +1,261 @@
+/* SwayNC Tokyo Night Theme with Blur Support */
+
+/* Import font */
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+
+/* Tokyo Night color palette */
+@define-color bg #1a1b26;
+@define-color bg-dark #16161e;
+@define-color bg-highlight #292e42;
+@define-color fg #c0caf5;
+@define-color fg-dark #a9b1d6;
+@define-color blue #7aa2f7;
+@define-color cyan #7dcfff;
+@define-color magenta #bb9af7;
+@define-color green #9ece6a;
+@define-color red #f7768e;
+@define-color yellow #e0af68;
+@define-color orange #ff9e64;
+
+/* Base window styling */
+.notification-row {
+    outline: none;
+}
+
+.notification-row:focus,
+.notification-row:hover {
+    background: transparent;
+}
+
+/* Control center - main panel */
+.control-center {
+    background: rgba(26, 27, 38, 0.85);
+    border: 2px solid @blue;
+    border-radius: 12px;
+    padding: 12px;
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+}
+
+/* Notification window for popups */
+.notification-window {
+    background: transparent;
+}
+
+/* Individual notification styling */
+.notification {
+    background: rgba(26, 27, 38, 0.9);
+    border: 1px solid @bg-highlight;
+    border-radius: 8px;
+    margin: 6px 0;
+    padding: 0;
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+}
+
+.notification:hover {
+    border-color: @blue;
+}
+
+/* Notification content */
+.notification-content {
+    padding: 12px;
+}
+
+/* App name / summary */
+.summary {
+    color: @fg;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+/* Notification body text */
+.body {
+    color: @fg-dark;
+    font-size: 12px;
+}
+
+/* Time stamp */
+.time {
+    color: @blue;
+    font-size: 10px;
+    margin-right: 8px;
+}
+
+/* App icon */
+.notification-icon {
+    margin-right: 12px;
+}
+
+/* Close button */
+.close-button {
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: @fg-dark;
+    min-width: 24px;
+    min-height: 24px;
+    padding: 4px;
+}
+
+.close-button:hover {
+    background: @bg-highlight;
+    color: @red;
+}
+
+/* Action buttons */
+.notification-action {
+    background: @bg-highlight;
+    border: 1px solid @bg-highlight;
+    border-radius: 6px;
+    color: @fg;
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+    font-size: 12px;
+    margin: 4px 2px;
+    padding: 6px 12px;
+}
+
+.notification-action:hover {
+    background: @blue;
+    border-color: @blue;
+    color: @bg;
+}
+
+/* Critical notifications */
+.critical {
+    border-color: @red;
+}
+
+.critical .summary {
+    color: @red;
+}
+
+/* Low priority notifications */
+.low {
+    border-color: @bg-highlight;
+}
+
+/* Title widget */
+.widget-title {
+    color: @fg;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    padding: 8px 4px;
+}
+
+.widget-title > label {
+    color: @fg;
+}
+
+/* Clear all button */
+.widget-title > button {
+    background: @bg-highlight;
+    border: 1px solid @bg-highlight;
+    border-radius: 6px;
+    color: @fg;
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+    font-size: 12px;
+    padding: 6px 12px;
+}
+
+.widget-title > button:hover {
+    background: @red;
+    border-color: @red;
+    color: @bg;
+}
+
+/* Do Not Disturb toggle */
+.widget-dnd {
+    background: @bg-highlight;
+    border-radius: 8px;
+    margin: 8px 0;
+    padding: 8px 12px;
+}
+
+.widget-dnd > switch {
+    background: @bg-dark;
+    border-radius: 12px;
+}
+
+.widget-dnd > switch:checked {
+    background: @blue;
+}
+
+.widget-dnd > switch slider {
+    background: @fg;
+    border-radius: 10px;
+    min-width: 20px;
+    min-height: 20px;
+}
+
+.widget-dnd > label {
+    color: @fg;
+    font-size: 13px;
+}
+
+/* Notification group */
+.notification-group {
+    margin: 4px 0;
+}
+
+.notification-group-headers {
+    color: @blue;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 4px 4px 4px;
+}
+
+/* Collapsed notification group */
+.notification-group-collapse-button {
+    background: transparent;
+    border: none;
+    color: @fg-dark;
+    padding: 4px;
+}
+
+.notification-group-collapse-button:hover {
+    color: @blue;
+}
+
+/* Image in notification */
+.body-image {
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+/* Inline reply entry */
+.inline-reply {
+    background: @bg-dark;
+    border: 1px solid @bg-highlight;
+    border-radius: 6px;
+    color: @fg;
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+    margin-top: 8px;
+    padding: 8px;
+}
+
+.inline-reply:focus {
+    border-color: @blue;
+}
+
+/* Blank window (when no notifications) */
+.blank-window {
+    background: transparent;
+}
+
+/* Floating notifications */
+.floating-notifications {
+    background: transparent;
+}
+
+/* Progress bar in notifications */
+progressbar {
+    background: @bg-dark;
+    border-radius: 4px;
+    min-height: 6px;
+}
+
+progressbar progress {
+    background: @blue;
+    border-radius: 4px;
+}
