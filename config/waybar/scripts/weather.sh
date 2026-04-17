@@ -66,8 +66,8 @@ get_weather() {
     # Build tooltip
     tooltip="${desc}\\nTemperature: ${temp}°C (feels like ${feels_like}°C)\\nHumidity: ${humidity}%\\nWind: ${wind} km/h"
 
-    # Output JSON
-    output="{\"text\": \"$icon $desc | 󰔏 ${temp}°C\", \"tooltip\": \"$tooltip\", \"class\": \"$icon_class $temp_class\"}"
+    # Output JSON (compact format: icon + temp only, full description in tooltip)
+    output="{\"text\": \"$icon ${temp}°C\", \"tooltip\": \"$tooltip\", \"class\": \"$icon_class $temp_class\"}"
 
     # Cache result
     echo "$output" > "$CACHE_FILE"

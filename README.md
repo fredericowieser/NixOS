@@ -18,6 +18,22 @@ Or as a one-liner:
 bash <(curl -s https://raw.githubusercontent.com/fredericowieser/NixOS/main/install.sh)
 ```
 
+## Updating
+
+After initial install, use `update.sh` to pull latest changes and update configs:
+
+```bash
+cd ~/NixOS && ./update.sh
+```
+
+This will:
+1. Pull latest changes from git
+2. Copy updated configs to `~/.config/`
+3. Make scripts executable
+4. Optionally update `/etc/nixos/configuration.nix` (preserves hostname/username)
+5. Optionally run `nixos-rebuild switch`
+6. Reload Hyprland and restart Waybar (no logout required)
+
 ## Prerequisites
 
 - Fresh minimal NixOS installation

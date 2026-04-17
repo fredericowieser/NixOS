@@ -2,7 +2,7 @@
 
 * {
     font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
-    font-size: 13px;
+    font-size: 11px;
     min-height: 0;
     border: none;
     border-radius: 0;
@@ -24,8 +24,8 @@ window#waybar.hidden {
 }
 
 #workspaces button {
-    padding: 0 8px;
-    margin: 4px 2px;
+    padding: 0 4px;
+    margin: 4px 1px;
     color: #565f89;
     background-color: transparent;
     border-radius: 4px;
@@ -52,7 +52,7 @@ window#waybar.hidden {
 #clock {
     color: #c0caf5;
     font-weight: bold;
-    padding: 0 12px;
+    padding: 0 8px;
 }
 
 /* Separator */
@@ -72,8 +72,8 @@ window#waybar.hidden {
 #custom-notifications,
 #custom-caffeine,
 #custom-power {
-    padding: 0 8px;
-    margin: 4px 2px;
+    padding: 0 6px;
+    margin: 4px 1px;
     color: #c0caf5;
     background-color: transparent;
     border-radius: 4px;
@@ -126,8 +126,8 @@ window#waybar.hidden {
 
 /* Network Status */
 #custom-network {
-    padding: 0 8px;
-    margin: 4px 2px;
+    padding: 0 6px;
+    margin: 4px 1px;
     border-radius: 4px;
 }
 
@@ -248,8 +248,8 @@ tooltip label {
 
 /* Weather Module */
 #custom-weather {
-    padding: 0 8px;
-    margin: 4px 2px;
+    padding: 0 6px;
+    margin: 4px 1px;
     color: #c0caf5;
     border-radius: 4px;
 }
@@ -276,8 +276,8 @@ tooltip label {
 
 /* Pomodoro Timer */
 #custom-pomodoro {
-    padding: 0 8px;
-    margin: 4px 2px;
+    padding: 0 6px;
+    margin: 4px 1px;
     border-radius: 4px;
 }
 
