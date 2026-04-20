@@ -1,13 +1,23 @@
 #!/usr/bin/env bash
 # Detects Hyprland's auto-scale and configures XWayland DPI accordingly
+# Handles multiple monitors by using the highest scale value
 
-sleep 1  # Wait for Hyprland to initialize
+# Wait for Hyprland to initialize (skip if called after startup)
+if [[ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]]; then
+    sleep 1
+fi
 
-# Get current scale from first monitor
-SCALE=$(hyprctl monitors -j | jq -r '.[0].scale')
+# Get the highest scale from all monitors (better for mixed HiDPI setups)
+# XWayland apps look better at HiDPI and get scaled down on lower-DPI monitors
+SCALE=$(hyprctl monitors -j 2>/dev/null | jq -r '[.[].scale] | max // 1')
+
+# Fallback if no monitors detected or jq fails
+if [[ -z "$SCALE" || "$SCALE" == "null" ]]; then
+    SCALE=1
+fi
 
 # Calculate DPI (base 96 * scale)
-DPI=$(echo "$SCALE * 96" | bc | cut -d. -f1)
+DPI=$(echo "$SCALE * 96" | bc 2>/dev/null | cut -d. -f1)
 DPI=${DPI:-96}  # Fallback to 96 if calculation fails
 
 # Update Xresources for XWayland apps
@@ -21,4 +31,4 @@ Xft.antialias: 1
 Xft.rgba: rgb
 EOF
 
-xrdb -merge ~/.Xresources
+xrdb -merge ~/.Xresources 2>/dev/null

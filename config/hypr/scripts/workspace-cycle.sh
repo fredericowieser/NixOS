@@ -1,37 +1,57 @@
 #!/usr/bin/env bash
-# Cycle through all 10 workspaces with wrap-around
-# 1→2→3→4→5→6→7→8→9→10→1 (next)
-# 1→10→9→8→7→6→5→4→3→2→1 (prev)
+# Cycle through workspaces on the CURRENT monitor only
+# Laptop (eDP-*): cycles 1-8
+# External monitors: cycles their assigned range (9-12, 13-16, etc.)
 
-MAX_WS=8
-current=$(hyprctl activeworkspace | grep -oP 'workspace ID \K[0-9]+')
+LAPTOP_WORKSPACES=8
+WORKSPACES_PER_EXTERNAL=4
 
-# Fallback if grep -P not available
-if [[ -z "$current" ]]; then
-    current=$(hyprctl activeworkspace | head -1 | awk '{print $3}')
+# Get current workspace and monitor
+current_ws=$(hyprctl activeworkspace -j | jq -r '.id')
+current_monitor=$(hyprctl activeworkspace -j | jq -r '.monitor')
+
+# Determine workspace range for this monitor
+if [[ "$current_monitor" == eDP* ]]; then
+    # Laptop monitor: workspaces 1-8
+    min_ws=1
+    max_ws=$LAPTOP_WORKSPACES
+else
+    # External monitor: need to find its range
+    # Get list of external monitors sorted
+    externals=$(hyprctl monitors -j | jq -r '.[] | select(.name | startswith("eDP") | not) | .name' | sort)
+
+    # Find index of current monitor
+    monitor_index=0
+    for mon in $externals; do
+        if [[ "$mon" == "$current_monitor" ]]; then
+            break
+        fi
+        monitor_index=$((monitor_index + 1))
+    done
+
+    # Calculate workspace range
+    min_ws=$((LAPTOP_WORKSPACES + 1 + monitor_index * WORKSPACES_PER_EXTERNAL))
+    max_ws=$((min_ws + WORKSPACES_PER_EXTERNAL - 1))
 fi
 
-# Default to 1 if still empty
-if [[ -z "$current" || ! "$current" =~ ^[0-9]+$ ]]; then
-    current=1
-fi
-
+# Calculate next workspace
 case "$1" in
     next)
-        next=$((current + 1))
-        if [[ $next -gt $MAX_WS ]]; then
-            next=1
+        next_ws=$((current_ws + 1))
+        if [[ $next_ws -gt $max_ws ]]; then
+            next_ws=$min_ws
         fi
         ;;
     prev)
-        next=$((current - 1))
-        if [[ $next -lt 1 ]]; then
-            next=$MAX_WS
+        next_ws=$((current_ws - 1))
+        if [[ $next_ws -lt $min_ws ]]; then
+            next_ws=$max_ws
         fi
         ;;
     *)
+        echo "Usage: $0 [next|prev]"
         exit 1
         ;;
 esac
 
-hyprctl dispatch workspace "$next"
+hyprctl dispatch workspace "$next_ws"

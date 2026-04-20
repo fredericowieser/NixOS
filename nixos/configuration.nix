@@ -65,6 +65,22 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+  # AMD GPU / ROCm support
+  hardware.amdgpu.opencl.enable = true;
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      rocmPackages.clr.icd
+      rocmPackages.rocm-runtime
+    ];
+  };
+  systemd.tmpfiles.rules = [
+    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+  ];
+  # Override GPU architecture for ROCm (may need adjustment for your APU)
+  # AMD Ryzen AI 7 350 uses RDNA 3.5 - try gfx1103 or gfx1100 if needed
+  environment.variables.HSA_OVERRIDE_GFX_VERSION = "11.0.3";
+
   # Support removable drives
   services.udisks2.enable = true;
   services.gvfs.enable = true;
@@ -76,7 +92,7 @@
   users.users.USERNAME = {
     isNormalUser = true;
     description = "Primary User";
-    extraGroups = [ "wheel" "networkmanager" "audio" "video" "disk" "plugdev" ]; # Enable 'sudo' for the user.
+    extraGroups = [ "wheel" "networkmanager" "audio" "video" "disk" "plugdev" "render" ]; # Enable 'sudo' for the user.
     packages = with pkgs; [
       tree
     ];
@@ -106,6 +122,7 @@
     hyprpaper
     hyprlock
     wlr-randr
+    nwg-displays  # GUI for monitor arrangement and scaling
 
     git
     vivaldi
@@ -147,7 +164,7 @@
 
     # Communication
     thunderbird
-    discord
+    webcord
     wasistlos
     telegram-desktop
     signal-desktop
@@ -156,9 +173,24 @@
     btop
     wlsunset
     jq
+    socat  # For Hyprland IPC monitor events
     cmatrix
     yazi
     fzf
+    brightnessctl
+
+    # Python
+    uv
+    python311
+    python312
+    python313
+
+    # ROCm / AMD GPU compute
+    rocmPackages.rocm-smi
+    rocmPackages.rocminfo
+    rocmPackages.clr
+    rocmPackages.hip-common
+    rocmPackages.hipify
 
     # VPN
     protonvpn-gui

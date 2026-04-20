@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Display Configuration
+Comment=Configure monitor arrangement and scaling (saves to local config)
+Exec=sh -c "$HOME/.config/hypr/scripts/nwg-displays-wrapper.sh"
+Icon=preferences-desktop-display
+Terminal=false
+Type=Application
+Categories=Settings;HardwareSettings;
+Keywords=monitor;display;screen;resolution;scaling;

@@ -54,8 +54,23 @@ print_status "Copying config files to ~/.config/..."
 
 # Hyprland
 if [[ -d "$REPO_DIR/config/hypr" ]]; then
+    # Backup monitors-local.conf if it exists (user's custom monitor settings)
+    if [[ -f "$CONFIG_DIR/hypr/monitors-local.conf" ]]; then
+        cp "$CONFIG_DIR/hypr/monitors-local.conf" /tmp/monitors-local.conf.bak
+    fi
+
     cp -r "$REPO_DIR/config/hypr/"* "$CONFIG_DIR/hypr/"
-    print_success "Updated Hyprland config"
+
+    # Restore monitors-local.conf (survives updates)
+    if [[ -f /tmp/monitors-local.conf.bak ]]; then
+        mv /tmp/monitors-local.conf.bak "$CONFIG_DIR/hypr/monitors-local.conf"
+    elif [[ ! -f "$CONFIG_DIR/hypr/monitors-local.conf" ]]; then
+        # Create empty file so Hyprland source directive doesn't error
+        touch "$CONFIG_DIR/hypr/monitors-local.conf"
+        echo "# Local monitor settings - edit here or use nwg-displays" > "$CONFIG_DIR/hypr/monitors-local.conf"
+    fi
+
+    print_success "Updated Hyprland config (monitors-local.conf preserved)"
 fi
 
 # Waybar
@@ -93,6 +108,13 @@ if [[ -d "$REPO_DIR/config/swaync" ]]; then
     mkdir -p "$CONFIG_DIR/swaync"
     cp -r "$REPO_DIR/config/swaync/"* "$CONFIG_DIR/swaync/"
     print_success "Updated Swaync config"
+fi
+
+# Local desktop entries (for custom app launchers)
+if [[ -d "$REPO_DIR/config/applications" ]]; then
+    mkdir -p "$HOME/.local/share/applications"
+    cp -r "$REPO_DIR/config/applications/"* "$HOME/.local/share/applications/"
+    print_success "Updated desktop entries"
 fi
 
 # Step 3: Make scripts executable

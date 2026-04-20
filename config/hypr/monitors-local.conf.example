@@ -1,0 +1,12 @@
+# Local Monitor Configuration
+# This file is NOT overwritten by update.sh - your settings persist here
+# Copy this to monitors-local.conf and customize, or use nwg-displays
+
+# nwg-displays will save your settings here automatically
+# These settings OVERRIDE the defaults in monitors.conf
+
+# Example: Custom scaling for your specific external monitor
+# monitor = DP-1, 2560x1440@144, auto-up, 1.25
+
+# Example: Specific positioning
+# monitor = HDMI-A-1, 1920x1080@60, 0x-1080, 1

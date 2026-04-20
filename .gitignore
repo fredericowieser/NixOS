@@ -20,3 +20,6 @@
 .env.*
 secrets/
 credentials/
+
+# Local machine-specific configs (not synced, survives updates)
+config/hypr/monitors-local.conf
