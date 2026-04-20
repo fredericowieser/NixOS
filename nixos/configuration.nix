@@ -127,6 +127,8 @@
     git
     vivaldi
     wl-clipboard
+    grim      # Screenshot tool
+    slurp     # Region selection for screenshots
 
     udiskie
     xfce.thunar
